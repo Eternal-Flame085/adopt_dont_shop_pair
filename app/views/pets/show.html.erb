@@ -1,0 +1,12 @@
+<a href="/shelters">Shelters Index</a><br>
+<a href="/pets">Pets Index</a><br>
+<h1>Name: <%= @pet.name %></h1>
+<a href="/pets/<%= @pet.id %>/edit">Update Pet</a><br>
+<%= link_to "Delete Pet", "/pets/#{@pet.id}", method: 'delete' %><br>
+<img src="<%= @pet.image %>" width='720' height='480'>
+<p>
+  Age: <%= @pet.age %><br>
+  Sex: <%= @pet.sex %><br>
+  Status: <%= @pet.status%><br>
+  Description: <%= @pet.description %><br>
+</p>

@@ -1,0 +1,19 @@
+<h1>All pets in system</h1>
+<a href="/shelters">Shelters Index</a>
+
+<% @pets.each do |pet| %>
+  <div>
+      <br><img src="<%= pet.image %>" width='256' height='192'>
+      <p>
+        <b><a href="/pets/<%= pet.id %>">
+          Name: <%= pet.name %>
+        </a></b> <a href="/pets/<%= pet.id %>/edit">Edit</a>
+        <%= link_to "Delete", "/pets/#{pet.id}", method: 'delete' %><br>
+        Age: <%= pet.age %><br>
+        Sex: <%= pet.sex %><br>
+        <a href="/shelters/<%= @shelters.find(pet.shelter_id).id %>">
+          Shelter Name: <%= @shelters.find(pet.shelter_id).name %>
+        </a><br>
+      </p>
+  </div>
+<% end %>

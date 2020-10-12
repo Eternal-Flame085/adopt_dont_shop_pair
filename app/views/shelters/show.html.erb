@@ -1,0 +1,11 @@
+<a href="/shelters">Shelters Index</a><br>
+<a href="/pets">Pets Index</a><br>
+
+<h1><%= @shelter.name %></h1>
+<p>
+  Address: <%= @shelter.address %><br>
+  City: <%= @shelter.city %><br>
+  State: <%= @shelter.state %><br>
+  Zip: <%= @shelter.zip %><br>
+  <a href="/shelters/<%= @shelter.id %>/pets">Shelter's Pets</a>
+</p>
