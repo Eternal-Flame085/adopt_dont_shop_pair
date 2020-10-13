@@ -1,0 +1,18 @@
+<%= form_tag "/users", method: :post do %>
+  <%= label_tag :Name %>:<br>
+  <%= text_field_tag :name %><br>
+
+  <%= label_tag :Address %>:<br>
+  <%= text_field_tag :address %><br>
+
+  <%= label_tag :City %>:<br>
+  <%= text_field_tag :city %><br>
+
+  <%= label_tag :State %>:<br>
+  <%= text_field_tag :state %><br>
+
+  <%= label_tag :Zip %>:<br>
+  <%= text_field_tag :zip %><br>
+
+  <%= submit_tag 'Create User' %>
+<% end %>
