@@ -6,14 +6,19 @@ class UsersController < ApplicationController
 
   def create
     user = User.new({
-      name: params[:user][:name],
-      address: params[:user][:address],
-      city: params[:user][:city],
-      state: params[:user][:state],
-      zip: params[:user][:zip]
+      name: params[:name],
+      address: params[:address],
+      city: params[:city],
+      state: params[:state],
+      zip: params[:zip]
     })
 
     user.save
+
+    redirect_to "/users/#{user.id}"
   end
 
+  def new
+
+  end
 end
