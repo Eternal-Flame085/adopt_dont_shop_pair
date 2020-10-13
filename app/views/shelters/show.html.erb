@@ -1,6 +1,5 @@
 <a href="/shelters">Shelters Index</a><br>
 <a href="/pets">Pets Index</a><br>
-
 <h1><%= @shelter.name %></h1>
 <p>
   Address: <%= @shelter.address %><br>
@@ -9,3 +8,13 @@
   Zip: <%= @shelter.zip %><br>
   <a href="/shelters/<%= @shelter.id %>/pets">Shelter's Pets</a>
 </p>
+
+<% @reviews.each do |review|  %>
+<div>
+  Title: <%= review.title %><br>
+  Rating: <%= review.rating %><br>
+  Content: <%= review.content %><br>
+  Picture: <%= review.photo %><br>
+  User name: <%= review.user_name %><br>
+</div>
+<% end %>
