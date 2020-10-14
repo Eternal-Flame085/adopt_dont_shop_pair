@@ -1,18 +1,28 @@
-class ReviewsController < ApplicationRecord
+class ReviewsController < ApplicationController
+
+  def new
+
+  end
 
   def create
-    require "pry"; binding.pry
-    shelter = Shelter.find(params[:id])
-    review = shelter.reviews.create({
-      title: params[:review][:title],
-      rating: params[:review][:rating],
-      content: params[:review][:content],
-      photo: params[:review][:photo],
-      user_name: params[:review][:user_name]
+    users = User.all
+    user_id = nil
+
+    users.each do |user|
+      user_id = user if user.name == params[:user_name]
+    end
+    review = Review.new({
+      title: params[:title],
+      rating: params[:rating],
+      content: params[:content],
+      photo: params[:photo],
+      user_name: params[:user_name],
+      shelter_id: params[:shelter_id],
+      user_id: user_id.id
     })
 
     review.save
 
-    redirect_to "/shelters/#{shelter.id}"
+    redirect_to "/shelters/#{params[:shelter_id]}"
   end
 end

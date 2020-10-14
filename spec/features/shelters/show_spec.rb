@@ -34,5 +34,12 @@ describe 'As a visitor' do
       expect(page).to have_content("Picture: #{review_1.photo}")
       expect(page).to have_content("User name: #{review_1.user_name}")
     end
+
+    it 'Has link for new review' do
+      shelter_1 = Shelter.create(name: 'AOA', address: '6254',
+                  city: 'Miami', state: 'CH', zip: '636')
+      visit "/shelters/#{shelter_1.id}"
+      expect(page).to have_link('New Review')
+    end
   end
 end

@@ -14,7 +14,7 @@ describe 'As a visitor' do
     expect(page).to have_content("Address: #{user_1.address}")
     expect(page).to have_content("City: #{user_1.city}")
     expect(page).to have_content("State: #{user_1.state}")
-    expect(page).to have_content("Zip: #{user_1.zip}")
+    expet(page).to have_content("Zip: #{user_1.zip}")
     end
   end
 end
