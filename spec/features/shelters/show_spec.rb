@@ -45,18 +45,37 @@ describe 'As a visitor' do
     it 'can see a link to edit the shelter review next to each review' do
       shelter_1 = Shelter.create(name: 'AOA', address: '6254',
                                  city: 'Miami', state: 'CH', zip: '636')
+
+      visit "/shelters/#{shelter_1.id}"
+
+      expect(page).to have_link('Edit Review')
+    end
+
+    it "I see a link next to each shelter review to delete the review" do
+      shelter_1 = Shelter.create(name: 'AOA', address: '6254',
+                                 city: 'Miami', state: 'CH', zip: '636')
       user_1 = User.create(name: 'AOA',
                            address: '6254',
                            city: 'Miami',
                            state: 'CH',
                            zip: '636')
-      review_1 = Review.create(title: 'AOA', rating: '6254',
+      review_1 = Review.create(title: 'Best Ever', rating: '6254',
                                 content: 'Miami', photo: 'CH', user_name: '636', shelter_id: "#{shelter_1.id}",
                                 user_id: "#{user_1.id}")
 
       visit "/shelters/#{shelter_1.id}"
 
-      expect(page).to have_link('Edit Review')
+      within(id="#review-#{review_1.id}") do
+        expect(page).to  have_link('Delete Review')
+      end
+
+      within(id="#review-#{review_1.id}") do
+        expect(page).to  have_content("Title: #{review_1.title}")
+
+        click_link "Delete Review"
+      end
+      
+      expect(page).to have_no_content("#{review_1.title}")
     end
   end
 end
