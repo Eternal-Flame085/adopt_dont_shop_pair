@@ -41,5 +41,22 @@ describe 'As a visitor' do
       visit "/shelters/#{shelter_1.id}"
       expect(page).to have_link('New Review')
     end
+
+    it 'can see a link to edit the shelter review next to each review' do
+      shelter_1 = Shelter.create(name: 'AOA', address: '6254',
+                                 city: 'Miami', state: 'CH', zip: '636')
+      user_1 = User.create(name: 'AOA',
+                           address: '6254',
+                           city: 'Miami',
+                           state: 'CH',
+                           zip: '636')
+      review_1 = Review.create(title: 'AOA', rating: '6254',
+                                content: 'Miami', photo: 'CH', user_name: '636', shelter_id: "#{shelter_1.id}",
+                                user_id: "#{user_1.id}")
+
+      visit "/shelters/#{shelter_1.id}"
+
+      expect(page).to have_link('Edit Review')
+    end
   end
 end

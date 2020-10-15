@@ -4,6 +4,17 @@ class ReviewsController < ApplicationController
 
   end
 
+  def edit
+    @review = Review.find(params[:review_id])
+  end
+
+  def update
+    review = Review.find(params[:review_id])
+    review.update(review_params)
+
+    redirect_to("/shelters/#{params[:shelter_id]}")
+  end
+
   def create
     users = User.all
     user_id = nil
@@ -24,5 +35,15 @@ class ReviewsController < ApplicationController
     review.save
 
     redirect_to "/shelters/#{params[:shelter_id]}"
+  end
+
+  private
+
+  def review_params
+    params.permit(:title, :rating, :content, :photo, :user_name)
+  end
+
+  def review_id
+    params.permit(:review_id)
   end
 end
