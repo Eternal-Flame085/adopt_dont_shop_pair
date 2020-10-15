@@ -11,12 +11,13 @@
 
 
 <a href="/shelters/<%= @shelter.id %>/new_review">New Review</a>
+
 <% @reviews.each do |review|  %>
 <section id="review-<%= review.id %>">
   Title: <%= review.title %> <a href="/shelters/<%= @shelter.id %>/<%= review.id %>/edit_review">Edit Review</a><br>
   Rating: <%= review.rating %><br>
   Content: <%= review.content %><br>
   Picture: <%= review.photo %><br>
-  User name: <%= review.user_name %><br>
+  User name: <%= @users.find(review.user_id).name %><br>
 </section><br>
 <% end %>

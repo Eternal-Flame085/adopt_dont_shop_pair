@@ -16,20 +16,15 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    users = User.all
-    user_id = nil
+    user = User.find_by(name: params[:user_name])
 
-    users.each do |user|
-      user_id = user if user.name == params[:user_name]
-    end
     review = Review.new({
       title: params[:title],
       rating: params[:rating],
       content: params[:content],
       photo: params[:photo],
-      user_name: params[:user_name],
       shelter_id: params[:shelter_id],
-      user_id: user_id.id
+      user_id: user.id
     })
 
     review.save
@@ -40,7 +35,7 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.permit(:title, :rating, :content, :photo, :user_name)
+    params.permit(:title, :rating, :content, :photo)
   end
 
   def review_id

@@ -32,7 +32,7 @@ describe 'As a visitor' do
       expect(page).to have_content("Rating: #{review_1.rating}")
       expect(page).to have_content("Content: #{review_1.content}")
       expect(page).to have_content("Picture: #{review_1.photo}")
-      expect(page).to have_content("User name: #{review_1.user_name}")
+      expect(page).to have_content("User name: #{user_1.name}")
     end
 
     it 'Has link for new review' do

@@ -14,8 +14,10 @@ describe 'edit a shelter review' do
                               user_id: "#{user_1.id}")
 
     visit "/shelters/#{shelter_1.id}"
-
-    click_link 'Edit Review'
+    
+    within(id="#review-#{review_1.id}") do
+      click_link 'Edit Review'
+    end
 
     expect(page).to have_selector('form')
     expect(page).to have_content('Title:')
@@ -48,7 +50,7 @@ describe 'edit a shelter review' do
     fill_in 'title', with: "Subaru"
 
     click_button 'Edit Review'
-    
+
     within("#review-#{review_1.id}") do
       expect(page).to have_content('Subaru')
     end
