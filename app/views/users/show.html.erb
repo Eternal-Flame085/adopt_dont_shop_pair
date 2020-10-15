@@ -6,9 +6,9 @@
   Zip: <%= @user.zip %><br>
 </p>
 
-<%= @reviews.each do |review| %>
+<% @reviews.each do |review| %>
 <div>
-  Title: <%= review.title %><br>
+  <b>Title: <%= review.title %><br></b>
   Rating: <%= review.rating %><br>
   Content: <%= review.content %><br>
 </div><br>
