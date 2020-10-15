@@ -9,13 +9,14 @@
   <a href="/shelters/<%= @shelter.id %>/pets">Shelter's Pets</a>
 </p>
 
+
 <a href="/shelters/<%= @shelter.id %>/new_review">New Review</a>
 <% @reviews.each do |review|  %>
-<div>
-  Title: <%= review.title %><br>
+<section id="review-<%= review.id %>">
+  Title: <%= review.title %> <a href="/shelters/<%= @shelter.id %>/<%= review.id %>/edit_review">Edit Review</a><br>
   Rating: <%= review.rating %><br>
   Content: <%= review.content %><br>
   Picture: <%= review.photo %><br>
   User name: <%= review.user_name %><br>
-</div><br>
+</section><br>
 <% end %>
