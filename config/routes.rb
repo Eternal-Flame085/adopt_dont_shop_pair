@@ -27,6 +27,5 @@ Rails.application.routes.draw do
   post 'shelters/:shelter_id', to: 'reviews#create'
   get '/shelters/:shelter_id/:review_id/edit_review', to: 'reviews#edit'
   patch 'shelters/:shelter_id/:review_id', to: "reviews#update"
-
-
+  delete '/shelters/:shelter_id/:review_id', to: 'reviews#delete'
 end
