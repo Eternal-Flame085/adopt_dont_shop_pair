@@ -10,7 +10,7 @@
   <%= text_field_tag :content, value="#{@review.content}" %><br>
 
   <%= label_tag :User_name %>:<br>
-  <%= text_field_tag :user_name, value="#{@review.user_name}" %><br>
+  <%= text_field_tag :user_name, value="#{User.find(@review.user_id).name}" %><br>
 
   <%= label_tag :Photo %>:<br>
   <%= text_field_tag :photo, value="#{@review.photo}" %><br>

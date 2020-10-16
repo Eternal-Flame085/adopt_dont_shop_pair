@@ -15,10 +15,20 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    review = Review.find(params[:review_id])
-    review.update(review_params)
-
-    redirect_to("/shelters/#{params[:shelter_id]}")
+    if User.find_by(name: params[:user_name]).nil?
+      @review = Review.find(params[:review_id])
+      flash[:notice] = "Review not updated: User could not be found."
+      render :edit
+    else
+      review = Review.find(params[:review_id])
+      if review.update(review_params)
+        redirect_to("/shelters/#{params[:shelter_id]}")
+      else
+        @review = Review.find(params[:review_id])
+        flash[:notice] = "Review not updated: Title, Rating, and/or Content is missing."
+        render :edit
+      end
+    end
   end
 
   def create
@@ -51,6 +61,6 @@ class ReviewsController < ApplicationController
   end
 
   def review_id
-    params.permit(:review_id)
+    params.permit(:review_id, :user_id)
   end
 end

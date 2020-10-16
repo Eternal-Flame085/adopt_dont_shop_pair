@@ -79,11 +79,6 @@ describe 'As a visitor' do
     it 'can fail to enter existing user and be returned to new review page with a flash message' do
       shelter_1 = Shelter.create(name: 'AOA', address: '6254',
                                  city: 'Miami', state: 'CH', zip: '636')
-      user_1 = User.create(name: 'Mike Dao',
-                           address: '6254',
-                           city: 'Miami',
-                           state: 'CH',
-                           zip: '636')
       visit "/shelters/#{shelter_1.id}/new_review"
 
       click_button 'Create Review'
