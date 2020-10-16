@@ -23,19 +23,25 @@ class ReviewsController < ApplicationController
 
   def create
     user = User.find_by(name: params[:user_name])
-
-    review = Review.new({
-      title: params[:title],
-      rating: params[:rating],
-      content: params[:content],
-      photo: params[:photo],
-      shelter_id: params[:shelter_id],
-      user_id: user.id
-    })
-
-    review.save
-
-    redirect_to "/shelters/#{params[:shelter_id]}"
+    if user.nil?
+      flash[:notice] = "Review not created: User could not be found."
+      render :new
+    else
+      review = Review.new({
+        title: params[:title],
+        rating: params[:rating],
+        content: params[:content],
+        photo: params[:photo],
+        shelter_id: params[:shelter_id],
+        user_id: user.id
+      })
+      if review.save
+        redirect_to "/shelters/#{params[:shelter_id]}"
+      else
+        flash[:notice] = "Review not created: Title, Rating, and/or Content is missing."
+        render :new
+      end
+    end
   end
 
   private
