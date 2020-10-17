@@ -6,9 +6,19 @@
   Zip: <%= @user.zip %><br>
 </p>
 
+<section id='highlighted-reviews'>
+  <h2>Highlighted Reviews</h2>
+  <% @highlighted_reviews.each do |review| %>
+    <b>Title: <%= review.title %></b><br>
+    Rating: <%= review.rating %><br>
+    Content: <%= review.content %><br><br>
+  <% end %>
+</section><br>
+
+<h2>All Reviews:</h2>
 <% @reviews.each do |review| %>
 <div>
-  <b>Title: <%= review.title %><br></b>
+  <b>Title: <%= review.title %></b><br>
   Rating: <%= review.rating %><br>
   Content: <%= review.content %><br>
 </div><br>
