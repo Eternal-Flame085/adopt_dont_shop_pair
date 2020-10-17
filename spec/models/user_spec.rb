@@ -22,7 +22,6 @@ describe 'instance methods' do
     review_2 = Review.create(title: 'Bad', rating: 5,
                              content: 'Miami', photo: 'CH', user_name: '636', shelter_id: "#{shelter_2.id}",
                              user_id: "#{user_1.id}")
-
     expect(user_1.average_rating.round(1)).to eq(7.5)
     end
   end
