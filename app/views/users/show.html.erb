@@ -6,6 +6,8 @@
   Zip: <%= @user.zip %><br>
 </p>
 
+<p>User's average rating: <%=@user.average_rating%></p><b>
+
 <section id='highlighted-reviews'>
   <h2>Highlighted Reviews</h2>
   <% @highlighted_reviews.each do |review| %>
