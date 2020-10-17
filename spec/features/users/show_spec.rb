@@ -57,7 +57,7 @@ describe 'As a visitor' do
                                shelter_id: "#{shelter_2.id}", user_id: "#{user.id}")
 
       visit "/users/#{user.id}"
-      
+
       within '#highlighted-reviews' do
         expect(page).to have_content("Highlighted Reviews")
 
@@ -69,6 +69,27 @@ describe 'As a visitor' do
         expect(page).to have_content("Rating: #{review_2.rating}")
         expect(page).to have_content("Content: #{review_2.content}")
       end
+      
+      it 'can see the average rating of all of the users reviews' do
+        user_1 = User.create(name: 'Mike Dao',
+                             address: '6254',
+                             city: 'Miami',
+                             state: 'CH',
+                             zip: '636')
+        shelter_1 = Shelter.create(name: 'AOA', address: '6254',
+                                   city: 'Miami', state: 'CH', zip: '636')
+        shelter_2 = Shelter.create(name: 'Denver', address: '6254',
+                                   city: 'Miami', state: 'CH', zip: '636')
+        review_1 = Review.create(title: 'Great', rating: 10,
+                                 content: 'Miami', photo: 'CH', user_name: '636', shelter_id: "#{shelter_1.id}",
+                                 user_id: "#{user_1.id}")
+        review_2 = Review.create(title: 'Bad', rating: 5,
+                                 content: 'Miami', photo: 'CH', user_name: '636', shelter_id: "#{shelter_2.id}",
+                                 user_id: "#{user_1.id}")
+
+        visit "/users/#{user_1.id}"
+        expect(page).to have_content("User's average rating: #{user_1.avg_rating}")
+       end
     end
   end
 end
