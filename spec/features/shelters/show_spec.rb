@@ -45,9 +45,16 @@ describe 'As a visitor' do
     it 'can see a link to edit the shelter review next to each review' do
       shelter_1 = Shelter.create(name: 'AOA', address: '6254',
                                  city: 'Miami', state: 'CH', zip: '636')
+      user_1 = User.create(name: 'AOA',
+                           address: '6254',
+                           city: 'Miami',
+                           state: 'CH',
+                           zip: '636')
+      review_1 = Review.create(title: 'Best Ever', rating: '6254',
+                                content: 'Miami', photo: 'CH', user_name: '636', shelter_id: "#{shelter_1.id}",
+                                user_id: "#{user_1.id}")
 
       visit "/shelters/#{shelter_1.id}"
-
       expect(page).to have_link('Edit Review')
     end
 
@@ -74,7 +81,7 @@ describe 'As a visitor' do
 
         click_link "Delete Review"
       end
-      
+
       expect(page).to have_no_content("#{review_1.title}")
     end
   end
