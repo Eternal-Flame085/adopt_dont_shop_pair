@@ -1,0 +1,14 @@
+<p>
+  <%=@application.user.name %><br>
+  <%=@application.user.address %><br>
+  <%=@application.description %><br>
+  <%=@application.status %><br>
+</p>
+
+
+
+<% @application.pets.each do |pet|  %>
+  <section id="pet-<%=pet.id%>">
+    <%= pet.name %>
+  </section>
+<% end %>
