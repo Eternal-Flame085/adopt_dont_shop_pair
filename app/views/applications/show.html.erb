@@ -18,7 +18,9 @@
 <section id='pet_search'>
 <% @pet_search.each do |pet| %>
 <ul>
-  <li><%= pet.name %></li>
+  <%= form_tag "/applications/#{@application.id}/#{pet.id}/add_pet", method: :post do%>
+  <li><%= pet.name %> <%= submit_tag 'Adopt this pet' %></li>
+  <% end %>
 </ul>
 <% end %>
 </section>
