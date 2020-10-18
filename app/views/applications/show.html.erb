@@ -1,8 +1,11 @@
 <p>
   <%=@application.user.name %><br>
-  <%=@application.user.address %><br>
-  <%=@application.description %><br>
-  <%=@application.status %><br>
+  Address: <%=@application.user.address %><br>
+  City: <%= @application.user.city %><br>
+  State: <%= @application.user.state %><br>
+  Zip: <%= @application.user.zip %><br>
+  Description: <%=@application.description %><br>
+  Status: <%=@application.status %><br>
 </p>
 
 
