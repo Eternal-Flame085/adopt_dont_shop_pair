@@ -10,8 +10,13 @@ class ApplicationsController < ApplicationController
 
   def create
     user = User.find_by(name: params[:user_name])
-    @application = Application.create({status: "In Progress",
-                                       user_id: user.id})
-    redirect_to "/applications/#{@application.id}"
+    if user.nil?
+      flash.now[:notice] = "User could not be found"
+      render :new
+    else
+      @application = Application.create({status: "In Progress",
+                                         user_id: user.id})
+      redirect_to "/applications/#{@application.id}"
+    end
   end
 end

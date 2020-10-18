@@ -36,5 +36,13 @@ describe 'As a visitor' do
       expect(page).to have_content(user.state)
       expect(page).to have_content(user.zip)
     end
+
+    it "Flash message if user does not exist" do
+      visit '/applications/new'
+      click_button 'Submit Application'
+
+      expect(page).to have_content("User could not be found")
+      expect(page).to have_button("Submit Application")
+    end
   end
 end
