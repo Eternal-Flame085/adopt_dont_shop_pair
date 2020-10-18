@@ -40,7 +40,6 @@ describe 'edit a shelter review' do
                               user_id: "#{user_1.id}")
 
     visit "/shelters/#{shelter_1.id}/#{review_1.id}/edit_review"
-
     expect(page).to have_field('title')
     expect(page).to have_field('rating')
     expect(page).to have_field('content')
