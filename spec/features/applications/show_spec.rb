@@ -29,6 +29,8 @@ describe 'as a visitor' do
     @application_1 = Application.create(description: "I love dogs",
                                         status: "Pending",
                                         user_id: @user_1.id)
+    @application_2 = Application.create(status: "In progress",
+                                        user_id: @user_1.id)
     PetsApplication.create(pet_id: @pet_1.id, application_id: @application_1.id)
     PetsApplication.create(pet_id: @pet_2.id, application_id: @application_1.id)
   end
@@ -65,6 +67,31 @@ describe 'as a visitor' do
       click_button 'Search'
 
       within(id='#pet_search') do
+        expect(page).to have_content(@pet_1.name)
+      end
+    end
+
+    it "next to each pet name I see a button to 'Adopt this pet'" do
+      visit "applications/#{@application_1.id}"
+
+      fill_in 'search', with: "#{@pet_1.name}"
+      click_button 'Search'
+
+      within(id='#pet_search') do
+        expect(page).to have_button('Adopt this pet')
+      end
+    end
+
+    it "after clicking 'Adopt this pet' I am taken back to the application show page" do
+      visit "applications/#{@application_2.id}"
+
+      fill_in 'search', with: "#{@pet_1.name}"
+      click_button 'Search'
+      within(id='#pet_search') do
+        click_button 'Adopt this pet'
+      end
+
+      within(id="#pet-#{@pet_1.id}") do
         expect(page).to have_content(@pet_1.name)
       end
     end
