@@ -48,5 +48,25 @@ describe 'as a visitor' do
         expect(page).to have_content(@pet_2.name)
       end
     end
+    it 'can visit a application show page that has not been submitted and see a
+    section to add a pet to the application' do
+      visit "applications/#{@application_1.id}"
+
+      expect(page).to have_content("Add a Pet to this Application")
+      expect(page).to have_selector('form')
+      expect(page).to have_field('search')
+      expect(page).to have_button('Search')
+    end
+    it 'can fill pets name in search field, click submit, and be taken back to show page
+    and see any pet name under show bar whose name matches search' do
+      visit "applications/#{@application_1.id}"
+
+      fill_in 'search', with: "#{@pet_1.name}"
+      click_button 'Search'
+
+      within(id='#pet_search') do
+        expect(page).to have_content(@pet_1.name)
+      end
+    end
   end
 end

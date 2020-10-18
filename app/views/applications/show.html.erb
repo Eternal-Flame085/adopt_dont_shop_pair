@@ -8,8 +8,23 @@
   Status: <%=@application.status %><br>
 </p>
 
+<h4>Add a Pet to this Application</h4>
+<%= form_tag "/applications/#{@application.id}", method: :get do%>
+
+<%= text_field_tag :search, params[:search] %><br>
+
+<%= submit_tag 'Search' %>
+<% end %>
+<section id='pet_search'>
+<% @pet_search.each do |pet| %>
+<ul>
+  <li><%= pet.name %></li>
+</ul>
+<% end %>
+</section>
 
 
+<h3>Pets in Application</h3>
 <% @application.pets.each do |pet|  %>
   <section id="pet-<%=pet.id%>">
     <%= pet.name %>
