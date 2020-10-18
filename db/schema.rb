@@ -42,12 +42,12 @@ ActiveRecord::Schema.define(version: 2020_10_17_192148) do
 
   create_table "reviews", force: :cascade do |t|
     t.string "title"
+    t.integer "rating"
     t.string "content"
     t.string "photo"
     t.string "user_name"
     t.bigint "shelter_id"
     t.bigint "user_id"
-    t.integer "rating"
     t.index ["shelter_id"], name: "index_reviews_on_shelter_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end

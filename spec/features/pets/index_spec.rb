@@ -2,9 +2,10 @@ require 'rails_helper'
 
 describe 'As a visitor' do
   describe 'When I visit /pets' do
-    it 'I see a header' do
+    it 'I see a header and link for an application' do
       visit '/pets'
       expect(page).to have_content("All pets in system")
+      expect(page).to have_link("Start an Application")
     end
 
     it 'Has an image for each pet' do
