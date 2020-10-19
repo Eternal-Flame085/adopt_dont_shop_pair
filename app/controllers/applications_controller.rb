@@ -28,8 +28,15 @@ class ApplicationsController < ApplicationController
   end
 
   def edit
-    application = Application.find(params[:application_id])
-    application.update({description: params[:description], status: 'Pending'})
-    redirect_to "/applications/#{params[:application_id]}"
+    if params[:description] == ""
+      @application = Application.find(params[:application_id])
+      @pet_search = Pet.search(params[:search])
+      flash[:notice] = "Please complete application description."
+      render :show
+    else
+      application = Application.find(params[:application_id])
+      application.update({description: params[:description], status: 'Pending'})
+      redirect_to "/applications/#{params[:application_id]}"
+    end
   end
 end
