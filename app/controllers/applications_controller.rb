@@ -26,4 +26,10 @@ class ApplicationsController < ApplicationController
                             application_id: params[:application_id]})
     redirect_to "/applications/#{params[:application_id]}"
   end
+
+  def edit
+    application = Application.find(params[:application_id])
+    application.update({description: params[:description], status: 'Pending'})
+    redirect_to "/applications/#{params[:application_id]}"
+  end
 end

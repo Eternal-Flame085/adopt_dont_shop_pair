@@ -27,9 +27,9 @@ describe 'as a visitor' do
                           state: 'CH',
                           zip: '636')
     @application_1 = Application.create(description: "I love dogs",
-                                        status: "Pending",
+                                        status: "In Progress",
                                         user_id: @user_1.id)
-    @application_2 = Application.create(status: "In progress",
+    @application_2 = Application.create(status: "In Progress",
                                         user_id: @user_1.id)
     PetsApplication.create(pet_id: @pet_1.id, application_id: @application_1.id)
     PetsApplication.create(pet_id: @pet_2.id, application_id: @application_1.id)
@@ -94,6 +94,40 @@ describe 'as a visitor' do
       within(id="#pet-#{@pet_1.id}") do
         expect(page).to have_content(@pet_1.name)
       end
+    end
+    it "I see an input to enter why i make a good owener" do
+      visit "applications/#{@application_2.id}"
+
+      fill_in 'search', with: "#{@pet_1.name}"
+      click_button 'Search'
+      within(id='#pet_search') do
+        click_button 'Adopt this pet'
+      end
+
+      within(id="#submission") do
+        expect(page).to have_selector('form')
+        expect(page).to have_field('description')
+        expect(page).to have_button('Submit Application')
+      end
+    end
+
+    it "when i click submit this application i am taken back to the
+    show page and indicator is that the application  is now Pending" do
+      visit "applications/#{@application_2.id}"
+
+      fill_in 'search', with: "#{@pet_1.name}"
+      click_button 'Search'
+      within(id='#pet_search') do
+        click_button 'Adopt this pet'
+      end
+
+      within(id="#submission") do
+        fill_in 'description', with: "I like dogs"
+        click_button 'Submit Application'
+      end
+      
+      expect(page).to have_content("Description: I like dogs")
+      expect(page).to have_content("Status: Pending")
     end
   end
 end
