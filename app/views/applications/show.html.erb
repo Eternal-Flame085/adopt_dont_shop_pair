@@ -30,7 +30,8 @@
   <section id='pet_search'>
   <% @pet_search.each do |pet| %>
   <ul>
-    <%= form_tag "/applications/#{@application.id}/#{pet.id}/add_pet", method: :post do%>
+    <%= form_tag "/applications/#{@application.id}/add_pet", method: :post do%>
+    <%= hidden_field_tag(:pet_id, value = "#{pet.id}") %>
     <li><%= pet.name %> <%= submit_tag 'Adopt this pet' %></li>
     <% end %>
   </ul>
