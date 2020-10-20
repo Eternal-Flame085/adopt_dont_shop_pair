@@ -17,13 +17,15 @@ class AdminController < ApplicationController
   end
 
   def approve
-    pet_application = PetsApplication.where(:pet_id => "#{params[:pet_id]}", :application_id => "#{params[:application_id]}")
+    pet_application = PetsApplication.where(:pet_id => "#{params[:pet_id]}",
+                                            :application_id => "#{params[:application_id]}")
     pet_application.first.update({status: 'Approved'})
     redirect_to "/admin/applications/#{params[:application_id]}"
   end
 
   def reject
-    pet_application = PetsApplication.where(:pet_id => "#{params[:pet_id]}", :application_id => "#{params[:application_id]}")
+    pet_application = PetsApplication.where(:pet_id => "#{params[:pet_id]}",
+                                            :application_id => "#{params[:application_id]}")
     pet_application.first.update({status: 'Rejected'})
 
     redirect_to "/admin/applications/#{params[:application_id]}"

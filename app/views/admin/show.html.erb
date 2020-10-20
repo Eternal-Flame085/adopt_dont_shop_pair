@@ -19,11 +19,13 @@
     <% else %>
       <%= pet_app.pet.name %>
 
-      <%= form_tag "/admin/applications/#{@application.id}/#{pet_app.pet_id}/approve", method: :patch do%>
+      <%= form_tag "/admin/applications/#{@application.id}/approve", method: :patch do%>
+        <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
         <%= submit_tag 'Approve' %>
       <% end %>
 
-      <%= form_tag "/admin/applications/#{@application.id}/#{pet_app.pet_id}/reject", method: :patch do%>
+      <%= form_tag "/admin/applications/#{@application.id}/reject", method: :patch do%>
+        <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
         <%= submit_tag 'Reject' %>
       <% end %>
 

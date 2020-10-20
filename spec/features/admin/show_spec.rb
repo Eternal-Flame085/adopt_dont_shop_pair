@@ -85,5 +85,34 @@ describe 'As a visitor(admin)' do
         expect(page).to have_button('Reject')
       end
     end
+
+    it "When all pets are approved the application status changes form 'Pending' to 'Approved'" do
+      visit "/admin/applications/#{@application_1.id}"
+
+      within(id="#pet-#{@pet_1.id}") do
+        click_button 'Approve'
+      end
+
+      within(id="#pet-#{@pet_2.id}") do
+        click_button 'Approve'
+      end
+
+      expect(page).to have_content('Status: Approved')
+    end
+
+    it "When one or more pets are rejected the application status changes
+    from 'Pending' to 'Rejected'" do
+      visit "/admin/applications/#{@application_1.id}"
+
+      within(id="#pet-#{@pet_1.id}") do
+        click_button 'Reject'
+      end
+
+      within(id="#pet-#{@pet_2.id}") do
+        click_button 'Reject'
+      end
+
+      expect(page).to have_content('Status: Rejected')
+    end
   end
 end

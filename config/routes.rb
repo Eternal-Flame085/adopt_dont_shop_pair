@@ -32,10 +32,10 @@ Rails.application.routes.draw do
   get '/applications/new', to: 'applications#new'
   post '/applications/create', to: 'applications#create'
   patch '/applications/:application_id', to: 'applications#edit'
-  post '/applications/:application_id/:pet_id/add_pet', to: 'applications#add_pet'
+  post '/applications/:application_id/add_pet', to: 'applications#add_pet'
   get '/applications/:application_id', to: 'applications#show'
 
   get '/admin/applications/:application_id', to: 'admin#show'
-  patch '/admin/applications/:application_id/:pet_id/approve', to: 'admin#approve'
-  patch '/admin/applications/:application_id/:pet_id/reject', to: 'admin#reject'
+  patch '/admin/applications/:application_id/approve', to: 'admin#approve'
+  patch '/admin/applications/:application_id/reject', to: 'admin#reject'
 end
