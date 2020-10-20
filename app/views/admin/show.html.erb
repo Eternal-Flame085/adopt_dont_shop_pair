@@ -1,0 +1,35 @@
+<p>
+  <%=@application.user.name %><br>
+  Address: <%=@application.user.address %><br>
+  City: <%= @application.user.city %><br>
+  State: <%= @application.user.state %><br>
+  Zip: <%= @application.user.zip %><br>
+  Description: <%=@application.description %><br>
+  Status: <%=@application.status %><br>
+</p>
+
+<h3>Pets in Application</h3>
+
+<% @pets_applications.each do |pet_app|  %>
+  <section id="pet-<%=pet_app.pet_id%>">
+
+    <% if pet_app.status == 'Approved'%>
+      <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
+    <% elsif pet_app.status == 'Rejected' %>
+      <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
+    <% else %>
+      <%= pet_app.pet.name %>
+
+      <%= form_tag "/admin/applications/#{@application.id}/#{pet_app.pet_id}/approve", method: :patch do%>
+        <%= submit_tag 'Approve' %>
+      <% end %>
+
+      <%= form_tag "/admin/applications/#{@application.id}/#{pet_app.pet_id}/reject", method: :patch do%>
+        <%= submit_tag 'Reject' %>
+      <% end %>
+
+    <% end %>
+
+  </section><br>
+
+<% end %>

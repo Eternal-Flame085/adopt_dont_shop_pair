@@ -22,10 +22,11 @@
   <h4>Add a Pet to this Application</h4>
   <%= form_tag "/applications/#{@application.id}", method: :get do%>
 
-  <%= text_field_tag :search, params[:search] %><br>
+    <%= text_field_tag :search, params[:search] %><br>
 
-  <%= submit_tag 'Search' %>
+    <%= submit_tag 'Search' %>
   <% end %>
+
   <section id='pet_search'>
   <% @pet_search.each do |pet| %>
   <ul>

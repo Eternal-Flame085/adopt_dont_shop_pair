@@ -34,4 +34,8 @@ Rails.application.routes.draw do
   patch '/applications/:application_id', to: 'applications#edit'
   post '/applications/:application_id/:pet_id/add_pet', to: 'applications#add_pet'
   get '/applications/:application_id', to: 'applications#show'
+
+  get '/admin/applications/:application_id', to: 'admin#show'
+  patch '/admin/applications/:application_id/:pet_id/approve', to: 'admin#approve'
+  patch '/admin/applications/:application_id/:pet_id/reject', to: 'admin#reject'
 end

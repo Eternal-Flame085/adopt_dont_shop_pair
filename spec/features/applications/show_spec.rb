@@ -34,6 +34,7 @@ describe 'as a visitor' do
     PetsApplication.create(pet_id: @pet_1.id, application_id: @application_1.id)
     PetsApplication.create(pet_id: @pet_2.id, application_id: @application_1.id)
   end
+  
   describe 'application show page' do
     it 'can visit an application show page and see application information' do
       visit "applications/#{@application_1.id}"
