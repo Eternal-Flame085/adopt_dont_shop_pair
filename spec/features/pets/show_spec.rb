@@ -100,5 +100,35 @@ describe 'As a visitor' do
         expect(current_path).to eq("/pets")
       end
     end
+      it 'can see a link to view all applicants for pet' do
+        shelter_1 = Shelter.create(name: 'AOA',
+                                   address: '6254',
+                                   city: 'Miami',
+                                   state: 'CH',
+                                   zip: '636')
+        pet_1 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                           name: 'Max',
+                           age: '3',
+                           sex: 'male',
+                           description: 'test',
+                           status: 'Adoptable',
+                           shelter_id: "#{shelter_1.id}")
+        user_1 = User.create(name: 'Mike Dao',
+                              address: '6254',
+                              city: 'Miami',
+                              state: 'CH',
+                              zip: '636')
+        application_1 = Application.create(description: "I love dogs",
+                                            status: "In Progress",
+                                            user_id: user_1.id)
+        PetsApplication.create(pet_id: pet_1.id, application_id: application_1.id, status: 'Pending')
+        visit "/pets/#{pet_1.id}"
+
+        expect(page).to have_link("View all applicants")
+
+        click_link "View all applicants"
+
+        expect(page).to have_content("Applicant name: Mike Dao")
+      end
   end
 end

@@ -12,22 +12,34 @@
 
 <% @pets_applications.each do |pet_app|  %>
   <section id="pet-<%=pet_app.pet_id%>">
-    <% if pet_app.status == 'Approved'%>
-      <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
-    <% elsif pet_app.status == 'Rejected' %>
-      <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
-    <% else %>
-      <%= pet_app.pet.name %>
-
-      <%= form_tag "/admin/applications/#{@application.id}/approve", method: :patch do%>
-        <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
-        <%= submit_tag 'Approve' %>
+  <% pet_app.pet.pets_applications.each do |application| %>
+      <% if application.status == 'Approved' %>
+        <% @pet_adoptability_status = "Adopted"  %>
       <% end %>
+  <% end  %>
 
-      <%= form_tag "/admin/applications/#{@application.id}/reject", method: :patch do%>
-        <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
-        <%= submit_tag 'Reject' %>
-      <% end %>
+
+
+  <% if @pet_adoptability_status == "Adopted" && pet_app.status == 'Pending'%>
+    <%= pet_app.pet.name  %>: Already approved for adoption
+    <% @pet_adoptability_status = ""  %>
+  <% elsif pet_app.status == 'Approved'%>
+    <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
+  <% elsif pet_app.status == 'Rejected' %>
+    <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
+  <% else %>
+
+    <%= pet_app.pet.name %>
+
+    <%= form_tag "/admin/applications/#{@application.id}/approve", method: :patch do%>
+      <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
+      <%= submit_tag 'Approve' %>
+    <% end %>
+
+    <%= form_tag "/admin/applications/#{@application.id}/reject", method: :patch do%>
+      <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
+      <%= submit_tag 'Reject' %>
+    <% end %>
 
     <% end %>
 

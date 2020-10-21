@@ -21,6 +21,13 @@ describe 'As a visitor(admin)' do
                                           description: 'test',
                                           status: 'Adoptable',
                                           shelter_id: "#{@shelter_1.id}")
+    @pet_3 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                                          name: 'Spot',
+                                          age: '1',
+                                          sex: 'male',
+                                          description: 'test',
+                                          status: 'Adoptable',
+                                          shelter_id: "#{@shelter_1.id}")
     @user_1 = User.create(name: 'Mike Dao',
                           address: '6254',
                           city: 'Miami',
@@ -31,8 +38,10 @@ describe 'As a visitor(admin)' do
                                         user_id: @user_1.id)
     @application_2 = Application.create(status: "In Progress",
                                         user_id: @user_1.id)
-    PetsApplication.create(pet_id: @pet_1.id, application_id: @application_1.id)
-    PetsApplication.create(pet_id: @pet_2.id, application_id: @application_1.id)
+    PetsApplication.create(pet_id: @pet_1.id, application_id: @application_1.id, status: 'Pending')
+    PetsApplication.create(pet_id: @pet_2.id, application_id: @application_1.id, status: 'Pending')
+    PetsApplication.create(pet_id: @pet_3.id, application_id: @application_1.id, status: 'Pending')
+    PetsApplication.create(pet_id: @pet_3.id, application_id: @application_2.id, status: "Approved")
   end
 
   describe 'When I visit an admin appllication show page "/admin/applications/:id"' do
@@ -56,7 +65,13 @@ describe 'As a visitor(admin)' do
 
       within(id="#pet-#{@pet_1.id}") do
         click_button 'Approve'
+
       end
+      require "pry"; binding.pry
+
+
+      save_and_open_page
+
 
       within(id="#pet-#{@pet_1.id}") do
         expect(page).to have_no_button('Approve')
