@@ -3,14 +3,18 @@
 <h3><a href="/shelters/new">New shelter</a></h3>
 
 <% @shelters.each do |shelter| %>
-  <div>
+  <section id="shelter-<%= shelter.id%>">
     <p>
       <b><a href="/shelters/<%= shelter.id %>">Name: <%= shelter.name %></a></b>
-      <a href="/shelters/<%= shelter.id %>/edit">Edit</a> <%= link_to "Delete", "/shelters/#{shelter.id}", method: 'delete' %><br>
+      <a href="/shelters/<%= shelter.id %>/edit">Edit</a>
+      <% if !shelter.approved_applications?%>
+        <%= link_to "Delete", "/shelters/#{shelter.id}", method: 'delete' %>
+      <% end %>
+      <br>
       Address: <%= shelter.address %><br>
       City: <%= shelter.city %><br>
       State: <%= shelter.state %><br>
       Zip: <%= shelter.zip %>
     </p>
-  </div>
+  </section>
 <% end %>

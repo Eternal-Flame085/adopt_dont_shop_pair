@@ -23,4 +23,15 @@ class Shelter < ApplicationRecord
     end
     applications.flatten.uniq.count
   end
+
+  def approved_applications?
+    any_approved = false
+
+    pets.each do |pet|
+      pet.applications.each do |application|
+        any_approved = true if application.status == 'Approved'
+      end
+    end
+    any_approved
+  end
 end
