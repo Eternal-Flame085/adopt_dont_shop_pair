@@ -86,7 +86,7 @@ describe 'As a visitor' do
       application_1 = Application.create(description: "I love dogs",
                                           status: "Approved",
                                           user_id: user_1.id)
-      application_2 = Application.create(status: "In Progress",
+      application_2 = Application.create(status: "Pending",
                                           user_id: user_1.id)
       PetsApplication.create(pet_id: pet_1.id, application_id: application_1.id, status: 'Pending')
       PetsApplication.create(pet_id: pet_2.id, application_id: application_1.id, status: 'Pending')

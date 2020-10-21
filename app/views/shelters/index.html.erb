@@ -7,7 +7,7 @@
     <p>
       <b><a href="/shelters/<%= shelter.id %>">Name: <%= shelter.name %></a></b>
       <a href="/shelters/<%= shelter.id %>/edit">Edit</a>
-      <% if !shelter.approved_applications?%>
+      <% if !shelter.pending_applications?%>
         <%= link_to "Delete", "/shelters/#{shelter.id}", method: 'delete' %>
       <% end %>
       <br>
