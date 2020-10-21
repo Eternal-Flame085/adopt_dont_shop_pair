@@ -11,13 +11,25 @@
 <h3>Pets in Application</h3>
 
 <% @pets_applications.each do |pet_app|  %>
+
+
+<% pet_app.pet.pets_applications.each do |application| %>
+  <% if application.status == 'Approved' && application.id != pet_app.id%>
+  <% @status_check = true %>
+  <% end %>
+<% end  %>
+
+
   <section id="pet-<%=pet_app.pet_id%>">
-    <% if pet_app.status == 'Approved'%>
+    <% if @status_check == true %>
+      <b><%= pet_app.pet.name %></b>: Already approved for adoption
+      <% @status_check = false %>
+    <% elsif pet_app.status == 'Approved'%>
       <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
     <% elsif pet_app.status == 'Rejected' %>
       <b><%= pet_app.pet.name %></b>: <%= pet_app.status %>
     <% else %>
-      <%= pet_app.pet.name %>
+      <b><%= pet_app.pet.name %></b>
 
       <%= form_tag "/admin/applications/#{@application.id}/approve", method: :patch do%>
         <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
@@ -28,7 +40,6 @@
         <%= hidden_field_tag(:pet_id, value = "#{pet_app.pet.id}") %>
         <%= submit_tag 'Reject' %>
       <% end %>
-
     <% end %>
 
   </section><br>

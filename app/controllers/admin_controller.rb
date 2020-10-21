@@ -2,6 +2,7 @@ class AdminController < ApplicationController
   def show
     @application = Application.find(params[:application_id])
     @pets_applications = PetsApplication.where(application: params[:application_id])
+    @status_check = false
     status = 'Pending'
 
     @pets_applications.each do |app|
