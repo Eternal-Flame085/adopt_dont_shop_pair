@@ -9,6 +9,12 @@
   <a href="/shelters/<%= @shelter.id %>/pets">Shelter's Pets</a>
 </p>
 
+<section id="statistics">
+  Pet count: <%= @shelter.pet_count %>
+  Average shelter rating: <%= @shelter.average_rating %>
+  Number of applications: <%= @shelter.applications_count %>
+</section>
+
 
 <a href="/shelters/<%= @shelter.id %>/new_review">New Review</a>
 
