@@ -67,11 +67,6 @@ describe 'As a visitor(admin)' do
         click_button 'Approve'
 
       end
-      require "pry"; binding.pry
-
-
-      save_and_open_page
-
 
       within(id="#pet-#{@pet_1.id}") do
         expect(page).to have_no_button('Approve')
@@ -143,7 +138,7 @@ describe 'As a visitor(admin)' do
         expect(page).to have_button('Approve')
         expect(page).to have_button('Reject')
       end
-      
+
       within(id="#pet-#{@pet_3.id}") do
         expect(page).to have_content("#{@pet_3.name}: Already approved for adoption")
       end
