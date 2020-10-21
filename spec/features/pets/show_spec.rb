@@ -60,7 +60,7 @@ describe 'As a visitor' do
     end
 
     describe 'should have 2 links one to update and one to delete' do
-      it 'Should have a link to update' do
+     it 'Should have a link to update' do
         shelter_1 = Shelter.create(name: 'AOA',
                                    address: '6254',
                                    city: 'Miami',
@@ -100,35 +100,58 @@ describe 'As a visitor' do
         expect(current_path).to eq("/pets")
       end
     end
-      it 'can see a link to view all applicants for pet' do
-        shelter_1 = Shelter.create(name: 'AOA',
-                                   address: '6254',
-                                   city: 'Miami',
-                                   state: 'CH',
-                                   zip: '636')
-        pet_1 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
-                           name: 'Max',
-                           age: '3',
-                           sex: 'male',
-                           description: 'test',
-                           status: 'Adoptable',
-                           shelter_id: "#{shelter_1.id}")
-        user_1 = User.create(name: 'Mike Dao',
-                              address: '6254',
-                              city: 'Miami',
-                              state: 'CH',
-                              zip: '636')
-        application_1 = Application.create(description: "I love dogs",
-                                            status: "In Progress",
-                                            user_id: user_1.id)
-        PetsApplication.create(pet_id: pet_1.id, application_id: application_1.id, status: 'Pending')
-        visit "/pets/#{pet_1.id}"
+    it 'can see a link to view all applicants for pet' do
+      shelter_1 = Shelter.create(name: 'AOA',
+                                 address: '6254',
+                                 city: 'Miami',
+                                 state: 'CH',
+                                 zip: '636')
+      pet_1 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                         name: 'Max',
+                         age: '3',
+                         sex: 'male',
+                         description: 'test',
+                         status: 'Adoptable',
+                         shelter_id: "#{shelter_1.id}")
+      user_1 = User.create(name: 'Mike Dao',
+                            address: '6254',
+                            city: 'Miami',
+                            state: 'CH',
+                            zip: '636')
+      application_1 = Application.create(description: "I love dogs",
+                                          status: "In Progress",
+                                          user_id: user_1.id)
+      PetsApplication.create(pet_id: pet_1.id, application_id: application_1.id, status: 'Pending')
+      visit "/pets/#{pet_1.id}"
 
-        expect(page).to have_link("View all applicants")
+      expect(page).to have_link("View all applicants")
 
-        click_link "View all applicants"
+      click_link "View all applicants"
 
-        expect(page).to have_content("Applicant name: Mike Dao")
-      end
+      expect(page).to have_link("Mike Dao")
+
+      click_link("Mike Dao")
+
+      expect(current_path).to eq("/applications/#{application_1.id}")
+    end
+    it 'can see a message stating there are no applicants for a pet that has not be applied for yet' do
+      shelter_1 = Shelter.create(name: 'AOA',
+                                 address: '6254',
+                                 city: 'Miami',
+                                 state: 'CH',
+                                 zip: '636')
+      pet_1 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                         name: 'Max',
+                         age: '3',
+                         sex: 'male',
+                         description: 'test',
+                         status: 'Adoptable',
+                         shelter_id: "#{shelter_1.id}")
+      visit "/pets/#{pet_1.id}"
+
+      click_link "View all applicants"
+
+      expect(page).to have_content("There are no applications for this pet")
+    end
   end
 end
