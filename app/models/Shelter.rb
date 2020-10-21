@@ -24,14 +24,14 @@ class Shelter < ApplicationRecord
     applications.flatten.uniq.count
   end
 
-  def approved_applications?
-    any_approved = false
+  def pending_applications?
+    any_pending = false
 
     pets.each do |pet|
       pet.applications.each do |application|
-        any_approved = true if application.status == 'Approved'
+        any_pending = true if application.status == 'Pending'
       end
     end
-    any_approved
+    any_pending
   end
 end
