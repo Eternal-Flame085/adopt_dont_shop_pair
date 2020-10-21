@@ -98,5 +98,128 @@ describe 'As a visitor' do
         expect(page).to have_no_link('Delete')
       end
     end
+
+    it "shelter can be deleted as long as all pets dont have approved applications" do
+      shelter_1 = Shelter.create(name: 'AOA',
+                                 address: '6254',
+                                 city: 'Miami',
+                                 state: 'CH',
+                                 zip: '636')
+     shelter_2 = Shelter.create(name: 'Funzzies',
+                                address: '6254',
+                                city: 'Miami',
+                                state: 'CH',
+                                zip: '636')
+      pet_1 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                         name: 'Max',
+                         age: '3',
+                         sex: 'male',
+                         description: 'test',
+                         status: 'Adoptable',
+                         shelter_id: "#{shelter_1.id}")
+      pet_2 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                                            name: 'Fido',
+                                            age: '3',
+                                            sex: 'male',
+                                            description: 'test',
+                                            status: 'Adoptable',
+                                            shelter_id: "#{shelter_1.id}")
+      pet_3 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                                            name: 'Alex',
+                                            age: '5',
+                                            sex: 'male',
+                                            description: 'test',
+                                            status: 'Adoptable',
+                                            shelter_id: "#{shelter_1.id}")
+      user_1 = User.create(name: 'AOA',
+                           address: '6254',
+                           city: 'Miami',
+                           state: 'CH',
+                           zip: '636')
+      review_1 = Review.create(title: 'AOA', rating: '5',
+                  content: 'Miami', photo: 'CH', shelter_id: "#{shelter_1.id}",
+                  user_id: "#{user_1.id}")
+      review_2 = Review.create(title: 'AOA', rating: '1',
+                  content: 'Miami', photo: 'CH', shelter_id: "#{shelter_1.id}",
+                  user_id: "#{user_1.id}")
+      application_1 = Application.create(description: "I love dogs",
+                                          status: "In Progress",
+                                          user_id: user_1.id)
+      application_2 = Application.create(status: "In progress",
+                                          user_id: user_1.id)
+      PetsApplication.create(pet_id: pet_1.id, application_id: application_1.id, status: 'pending')
+      PetsApplication.create(pet_id: pet_2.id, application_id: application_1.id, status: 'Pending')
+      PetsApplication.create(pet_id: pet_3.id, application_id: application_1.id, status: 'Pending')
+      PetsApplication.create(pet_id: pet_3.id, application_id: application_2.id, status: 'Approved')
+      visit '/shelters'
+
+      within(id="#shelter-#{shelter_1.id}") do
+        click_link 'Delete'
+      end
+
+      expect(page).to have_no_content(shelter_1.name)
+    end
+
+    it "cant be deleted if all pets are approved" do
+      shelter_1 = Shelter.create(name: 'AOA',
+                                 address: '6254',
+                                 city: 'Miami',
+                                 state: 'CH',
+                                 zip: '636')
+     shelter_2 = Shelter.create(name: 'Funzzies',
+                                address: '6254',
+                                city: 'Miami',
+                                state: 'CH',
+                                zip: '636')
+      pet_1 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                         name: 'Max',
+                         age: '3',
+                         sex: 'male',
+                         description: 'test',
+                         status: 'Adoptable',
+                         shelter_id: "#{shelter_1.id}")
+      pet_2 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                                            name: 'Fido',
+                                            age: '3',
+                                            sex: 'male',
+                                            description: 'test',
+                                            status: 'Adoptable',
+                                            shelter_id: "#{shelter_1.id}")
+      pet_3 = Pet.create(image: 'https://expertphotography.com/wp-content/uploads/2019/11/Cute-Kitten-Picture-get-your-cat-to-look-at-the-camera.jpg',
+                                            name: 'Alex',
+                                            age: '5',
+                                            sex: 'male',
+                                            description: 'test',
+                                            status: 'Adoptable',
+                                            shelter_id: "#{shelter_1.id}")
+      user_1 = User.create(name: 'AOA',
+                           address: '6254',
+                           city: 'Miami',
+                           state: 'CH',
+                           zip: '636')
+      review_1 = Review.create(title: 'AOA', rating: '5',
+                  content: 'Miami', photo: 'CH', shelter_id: "#{shelter_1.id}",
+                  user_id: "#{user_1.id}")
+      review_2 = Review.create(title: 'AOA', rating: '1',
+                  content: 'Miami', photo: 'CH', shelter_id: "#{shelter_1.id}",
+                  user_id: "#{user_1.id}")
+      application_1 = Application.create(description: "I love dogs",
+                                          status: "Approved",
+                                          user_id: user_1.id)
+      application_2 = Application.create(status: "Approved",
+                                          user_id: user_1.id)
+      PetsApplication.create(pet_id: pet_1.id, application_id: application_1.id, status: 'Approved')
+      PetsApplication.create(pet_id: pet_2.id, application_id: application_1.id, status: 'Approved')
+      PetsApplication.create(pet_id: pet_3.id, application_id: application_1.id, status: 'Approved')
+      PetsApplication.create(pet_id: pet_3.id, application_id: application_2.id, status: 'Approved')
+      visit '/shelters'
+
+
+      within(id="#shelter-#{shelter_1.id}") do
+        click_link 'Delete'
+      end
+
+      expect(page).to have_content('Shelter could not be deleted because all its pets have approved applications')
+    end
   end
 end
