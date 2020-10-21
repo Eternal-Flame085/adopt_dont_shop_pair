@@ -1,6 +1,6 @@
 class Shelter < ApplicationRecord
-  has_many :pets
-  has_many :reviews
+  has_many :pets, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   def pet_count
     pets.count
@@ -33,5 +33,21 @@ class Shelter < ApplicationRecord
       end
     end
     any_pending
+  end
+
+  def deletable?
+    total_applications = 0
+    total_approved = 0
+    can_delete = true
+
+    pets.each do |pet|
+      pet.applications.each do |application|
+        total_applications += 1
+        total_approved += 1 if application.status == 'Approved'
+      end
+    end
+    
+    can_delete = false if total_approved == total_applications && total_applications > 0
+    can_delete
   end
 end

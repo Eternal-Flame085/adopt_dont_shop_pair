@@ -49,13 +49,14 @@ class SheltersController < ApplicationController
   end
 
   def destroy
-    pets = Pet.all.where("shelter_id = #{params[:id]}")
-    pets.each do |pet|
-      Pet.destroy(pet.id)
+    if Shelter.find(params[:id]).deletable? == false
+      @shelters = Shelter.all
+      flash[:notice] = "Shelter could not be deleted because all its pets have approved applications"
+      render :index
+    else
+      Shelter.destroy(params[:id])
+      redirect_to '/shelters'
     end
-
-    Shelter.destroy(params[:id])
-    redirect_to '/shelters'
   end
 
   def pets_index
