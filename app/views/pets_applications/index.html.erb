@@ -1,0 +1,8 @@
+<% require "pry"; binding.pry %>
+<h3><%=@pet.name%> Adoption Applicants</h3>
+
+<%@pet.applications.each do |app| %>
+  <p>Applicant name: <%=app.user.name%></p>
+<% end %>
+
+<a href="/pets_applications/<%= @shelter.id %>/<%= review.id %>/edit_review">Edit Review</a>

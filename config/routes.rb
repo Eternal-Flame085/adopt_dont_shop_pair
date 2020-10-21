@@ -40,5 +40,5 @@ Rails.application.routes.draw do
   patch '/admin/applications/:application_id/approve', to: 'admin#approve'
   patch '/admin/applications/:application_id/reject', to: 'admin#reject'
 
-  get '/pets_apps/pets/:id', to: 'pets_apps#index'
+  get '/pets_applications/pets/:id', to: 'pets_applications#index'
 end
