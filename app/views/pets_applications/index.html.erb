@@ -1,0 +1,12 @@
+
+<h3><%=@pet.name%>'s Adoption Applicants</h3>
+
+<%if @pet.applications.length == 0 %>
+  <p>There are no applications for this pet</p>
+<%end%>
+
+<%@pet.applications.each do |app| %>
+  <p>
+    <a href="/applications/<%=app.id%>"><%=app.user.name%></a>
+  </p><br>
+<% end %>
