@@ -41,8 +41,14 @@ class PetsController < ApplicationController
   end
 
   def destroy
-    Pet.destroy(params[:id])
-    redirect_to '/pets'
+    if Pet.find(params[:id]).deletable? == false
+      @pet = Pet.find(params[:id])
+      flash[:notice] = "Pet cannot be deleted because it has been approved for adoption"
+      render :show
+    else
+      Pet.destroy(params[:id])
+      redirect_to '/pets'
+    end
   end
 
   private
